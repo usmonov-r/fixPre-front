@@ -1,0 +1,243 @@
+/* Animated Gradient Border Dropzone */
+.dropzone-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.dropzone {
+  position: relative;
+  width: 100%;
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Animated gradient border */
+.dropzone::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe, #43e97b, #38f9d7, #667eea);
+  background-size: 300% 300%;
+  border-radius: 1rem;
+  z-index: -1;
+  animation: gradientRotation 4s ease infinite;
+}
+
+/* Inner content border */
+.dropzone::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: calc(1rem - 1px);
+  z-index: -1;
+}
+
+/* Gradient rotation animation */
+@keyframes gradientRotation {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(0deg);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(180deg);
+  }
+  100% {
+    background-position: 0% 50%;
+    transform: rotate(360deg);
+  }
+}
+
+/* Shimmer effect */
+.dropzone.shimmer::before {
+  animation: gradientRotation 4s ease infinite, shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Hover effects */
+.dropzone:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dropzone:hover::before {
+  animation-duration: 2s;
+}
+
+/* Active/drag-over state */
+.dropzone.drag-over {
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px rgba(102, 126, 234, 0.2);
+}
+
+.dropzone.drag-over::before {
+  animation-duration: 1s;
+  opacity: 1;
+}
+
+/* Upload icon styling */
+.upload-icon {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.dropzone:hover .upload-icon {
+  transform: scale(1.1);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+/* Text styling */
+.dropzone-text {
+  text-align: center;
+  color: #4a5568;
+  font-family: 'Inter', sans-serif;
+}
+
+.dropzone-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+}
+
+.dropzone-subtitle {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+/* Loading state */
+.dropzone.uploading::before {
+  animation: gradientRotation 1s linear infinite;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe, #43e97b, #38f9d7, #667eea);
+  background-size: 200% 200%;
+}
+
+/* Success state */
+.dropzone.success::before {
+  background: linear-gradient(45deg, #43e97b, #38f9d7, #4facfe, #00f2fe, #43e97b);
+  background-size: 300% 300%;
+  animation: gradientRotation 3s ease infinite;
+}
+
+/* Error state */
+.dropzone.error::before {
+  background: linear-gradient(45deg, #f5576c, #f093fb, #f5576c);
+  background-size: 300% 300%;
+  animation: gradientRotation 2s ease infinite;
+}
+
+/* Pulse animation for attention */
+.dropzone.pulse::before {
+  animation: gradientRotation 4s ease infinite, pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dropzone {
+    padding: 2rem 1.5rem;
+  }
+  
+  .upload-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .dropzone-title {
+    font-size: 1.125rem;
+  }
+}
+
+/* Alternative styles */
+.dropzone.gradient-wave::before {
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+  background-size: 200% 200%;
+  animation: waveGradient 3s ease infinite;
+}
+
+@keyframes waveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.dropzone.rainbow::before {
+  background: linear-gradient(45deg, 
+    #ff0000, #ff7f00, #ffff00, #00ff00, 
+    #0000ff, #4b0082, #9400d3, #ff0000);
+  background-size: 400% 400%;
+  animation: rainbowGradient 5s ease infinite;
+}
+
+@keyframes rainbowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Subtle version */
+.dropzone.subtle::before {
+  background: linear-gradient(45deg, 
+    rgba(102, 126, 234, 0.3), 
+    rgba(118, 75, 162, 0.3), 
+    rgba(240, 147, 251, 0.3), 
+    rgba(245, 87, 108, 0.3), 
+    rgba(102, 126, 234, 0.3));
+  background-size: 300% 300%;
+  animation: gradientRotation 6s ease infinite;
+}

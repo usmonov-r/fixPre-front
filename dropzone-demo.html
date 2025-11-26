@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Gradient Dropzone</title>
+    <link rel="stylesheet" href="animated-dropzone.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 2rem;
+        }
+        
+        .demo-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .demo-title {
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+        }
+        
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .style-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .style-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .style-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .status-info {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">Animated Gradient Dropzone</h1>
+        <p class="demo-subtitle">Try different animation styles and drag files to see the effects</p>
+        
+        <div class="style-options">
+            <button class="style-btn active" onclick="setStyle('')">Default</button>
+            <button class="style-btn" onclick="setStyle('shimmer')">Shimmer</button>
+            <button class="style-btn" onclick="setStyle('gradient-wave')">Wave</button>
+            <button class="style-btn" onclick="setStyle('rainbow')">Rainbow</button>
+            <button class="style-btn" onclick="setStyle('subtle')">Subtle</button>
+            <button class="style-btn" onclick="setStyle('pulse')">Pulse</button>
+        </div>
+        
+        <div class="dropzone-container">
+            <div class="dropzone" id="dropzone">
+                <div class="upload-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                </div>
+                <div class="dropzone-text">
+                    <div class="dropzone-title">Drop your files here</div>
+                    <div class="dropzone-subtitle">or click to browse</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-info" id="status">
+            Ready to receive files • Drag and drop or click to select
+        </div>
+    </div>
+
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const status = document.getElementById('status');
+        let currentStyle = '';
+        
+        // Set animation style
+        function setStyle(style) {
+            // Remove all style classes
+            dropzone.className = 'dropzone';
+            
+            // Add new style class
+            if (style) {
+                dropzone.classList.add(style);
+            }
+            
+            // Update active button
+            document.querySelectorAll('.style-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentStyle = style;
+            updateStatus('Style changed to: ' + (style || 'Default'));
+        }
+        
+        // Update status message
+        function updateStatus(message) {
+            status.textContent = message;
+        }
+        
+        // File input handling
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.multiple = true;
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        
+        dropzone.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        // Drag and drop handling
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('drag-over');
+            updateStatus('Release to drop files...');
+        });
+        
+        dropzone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('drag-over');
+            updateStatus('Ready to receive files • Drag and drop or click to select');
+        });
+        
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        // Handle files
+        function handleFiles(files) {
+            if (files.length > 0) {
+                dropzone.classList.add('uploading');
+                updateStatus(`Uploading ${files.length} file(s)...`);
+                
+                // Simulate upload process
+                setTimeout(() => {
+                    dropzone.classList.remove('uploading');
+                    dropzone.classList.add('success');
+                    updateStatus(`Successfully uploaded ${files.length} file(s)! ✓`);
+                    
+                    // Reset after 3 seconds
+                    setTimeout(() => {
+                        dropzone.classList.remove('success');
+                        updateStatus('Ready to receive files • Drag and drop or click to select');
+                    }, 3000);
+                }, 2000);
+            }
+        }
+        
+        // Simulate error for testing
+        dropzone.addEventListener('dblclick', () => {
+            dropzone.classList.add('error');
+            updateStatus('Upload failed! Please try again. ✗');
+            
+            setTimeout(() => {
+                dropzone.classList.remove('error');
+                updateStatus('Ready to receive files • Drag and drop or click to select');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
