@@ -12,7 +12,6 @@ onMounted(() => {
   if (token.value) {
     try {
       const payload = JSON.parse(atob(token.value.split('.')[1]));
-      console.log(payload)
       userEmail.value = payload.username || 'User';
     } catch (e) {
       userEmail.value = 'User';
