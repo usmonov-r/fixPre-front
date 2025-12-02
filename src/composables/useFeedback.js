@@ -31,8 +31,17 @@ export function useFeedback() {
     }
 
     async function uploadFile(selectedFile) {
+        const MAX_SIZE_MB = 15;
+        const MAX_BYTES = MAX_SIZE_MB * 1024 * 1024
+
         if (!selectedFile) {
             error.value = "Please select a file first. ";
+            return;
+        }
+
+        if (selectedFile.size > MAX_BYTES) {
+            error.value = `File is too large. The limit is ${MAX_SIZE_MB}MB. Your file is ${(selectedFile.size / (1024 * 1024)).toFixed(2)}MB.`;
+            return;
         }
 
         isLoading.value = true

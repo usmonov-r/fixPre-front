@@ -32,7 +32,7 @@ export function useAuth() {
 
             const data = await response.json();
             const jwt = data.accessToken;
-            console.log(jwt)
+
             if (!jwt) {
                 throw new Error('No token received from server.');
             }
@@ -40,6 +40,7 @@ export function useAuth() {
             token.value = jwt;
             localStorage.setItem('jwt_token', jwt);
             isLoading.value = false;
+
             return {success: true};
         } catch (e) {
             error.value = e.message;
@@ -51,7 +52,6 @@ export function useAuth() {
     const loginWithGoogleCode = async (code) => {
         isLoading.value = true;
         error.value = null;
-        console.log('CODE', code)
 
         try {
             const reponse = await fetch('https://fixpre.api.kengroq.uz/api/auth/google', {
