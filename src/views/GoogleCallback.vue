@@ -1,11 +1,11 @@
 <script setup>
-import { onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useAuth } from '@/composables/useAuth.js'
+import {onMounted} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {useAuth} from '@/composables/useAuth.js'
 
 const route = useRoute();
 const router = useRouter();
-const { loginWithGoogleCode, error } = useAuth();
+const {loginWithGoogleCode, error} = useAuth();
 
 onMounted(async () => {
   const code = route.query.code;

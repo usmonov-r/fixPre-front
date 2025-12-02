@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import {computed, ref} from 'vue';
 
 const resetSuccess = ref(null);
 const resetError = ref(null);
@@ -12,6 +12,7 @@ export function useAuth() {
     const authError = ref(null)
     const isLoggedIn = computed(() => !!token.value);
     const authLoading = ref(false);
+
     async function login(email, password) {
         isLoading.value = true;
         error.value = null;
@@ -22,7 +23,7 @@ export function useAuth() {
                 headers: {
                     'Content-Type': 'application/ld+json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({email, password}),
             });
 
             if (!response.ok) {
@@ -39,26 +40,26 @@ export function useAuth() {
             token.value = jwt;
             localStorage.setItem('jwt_token', jwt);
             isLoading.value = false;
-            return { success: true };
+            return {success: true};
         } catch (e) {
             error.value = e.message;
             isLoading.value = false;
-            return { success: false, error: e.message };
+            return {success: false, error: e.message};
         }
     }
 
     const loginWithGoogleCode = async (code) => {
         isLoading.value = true;
         error.value = null;
-        console.log('CODE',code)
+        console.log('CODE', code)
 
-        try{
+        try {
             const reponse = await fetch('https://fixpre.api.kengroq.uz/api/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: code })
+                body: JSON.stringify({code: code})
             });
 
             const data = await reponse.json();
@@ -91,7 +92,7 @@ export function useAuth() {
                 headers: {
                     'Content-Type': 'application/ld+json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({email, password}),
             });
 
             if (!response.ok) {
@@ -108,11 +109,11 @@ export function useAuth() {
             }
 
             isLoading.value = false;
-            return { success: true };
+            return {success: true};
         } catch (e) {
             error.value = e.message;
             isLoading.value = false;
-            return { success: false, error: e.message };
+            return {success: false, error: e.message};
         }
     }
 
@@ -123,18 +124,18 @@ export function useAuth() {
     }
 
     //    PWD RESET FUNCTION
-    const requestPasswordReset = async (email) =>{
+    const requestPasswordReset = async (email) => {
         isLoadingPwd.value = true;
         resetError.value = null;
         resetSuccess.value = null;
 
-        try{
+        try {
             const response = await fetch('https://fixpre.api.kengroq.uz/api/users/password/request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/ld+json'
                 },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({email})
             });
 
             const data = await response.json()
@@ -145,17 +146,17 @@ export function useAuth() {
                 } else {
                     throw new Error(data.detail || 'An error occurred. ');
                 }
-            }else {
+            } else {
                 resetSuccess.value = data.message
             }
-        }catch(err) {
+        } catch (err) {
             resetError.value = err.message;
-        }finally {
+        } finally {
             isLoadingPwd.value = false;
         }
     };
 
-    const resetPassword = async (token, newPassword) =>{
+    const resetPassword = async (token, newPassword) => {
         authLoading.value = true;
         resetError.value = null;
         resetSuccess.value = null;
@@ -163,8 +164,8 @@ export function useAuth() {
         try {
             const response = await fetch('https://fixpre.api.kengroq.uz/api/users/password/reset', {
                 method: 'POST',
-                headers: {'Content-Type' : 'application/ld+json' },
-                body: JSON.stringify({ token, newPassword})
+                headers: {'Content-Type': 'application/ld+json'},
+                body: JSON.stringify({token, newPassword})
             });
 
             const data = await response.json();

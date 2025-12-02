@@ -4,7 +4,7 @@
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-600 mb-4"></div>
       <p class="text-slate-600">Loading dashboard data...</p>
     </div>
-    
+
     <div v-else class="space-y-8">
       <div class="max-w-7xl mx-auto space-y-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -26,14 +26,16 @@
           <div class="flex items-center gap-2 mb-4">
             <h2 class="text-xl font-semibold text-slate-800">Performance Over Time</h2>
             <div class="relative group">
-              <button class="w-5 h-5 rounded-full bg-slate-200 hover:bg-slate-300 flex items-center justify-center transition-colors">
+              <button
+                  class="w-5 h-5 rounded-full bg-slate-200 hover:bg-slate-300 flex items-center justify-center transition-colors">
                 <span class="text-slate-600 text-sm font-medium">?</span>
               </button>
-              <div class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-3 py-2 bg-slate-900 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                  <div class="text-xs">Track your presentation scores over time to see improvement trends</div>
-                  <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
-                    <div class="w-2 h-2 bg-slate-900 rotate-45"></div>
-                  </div>
+              <div
+                  class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-3 py-2 bg-slate-900 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                <div class="text-xs">Track your presentation scores over time to see improvement trends</div>
+                <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+                  <div class="w-2 h-2 bg-slate-900 rotate-45"></div>
+                </div>
                 <div class="text-xs">Track your presentation scores over time to see improvement trends</div>
                 <div class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
                   <div class="w-2 h-2 bg-slate-900 rotate-45"></div>
@@ -41,26 +43,28 @@
               </div>
             </div>
           </div>
-          
+
           <div class="h-80">
-              <div v-if="history.length === 0" class="flex items-center justify-center h-full text-slate-500">
+            <div v-if="history.length === 0" class="flex items-center justify-center h-full text-slate-500">
               <div class="text-center">
-                <svg class="w-16 h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                <svg class="w-16 h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24">
+                  <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1.5"></path>
                 </svg>
                 <p class="text-sm">No presentation data available yet</p>
                 <p class="text-xs mt-1">Upload your first presentation to see performance trends</p>
               </div>
             </div>
-            
 
-            <Line v-else :data="chartData" :options="chartOptions" />
+
+            <Line v-else :data="chartData" :options="chartOptions"/>
           </div>
         </div>
 
         <div class="bg-white p-6 rounded-xl shadow-md">
           <h2 class="text-xl font-semibold text-slate-800 mb-4">Recent Presentations</h2>
-          <HistoryView :history="history" />
+          <HistoryView :history="history"/>
         </div>
       </div>
     </div>
@@ -68,17 +72,33 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { Line } from 'vue-chartjs';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
+import {computed, onMounted} from 'vue';
+import {Line} from 'vue-chartjs';
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  Filler,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip
+} from 'chart.js';
 import HistoryView from './HistoryView.vue';
-import { historyFeedback } from "@/composables/historyFeedback.js";
-import { useDashboardStats } from "@/composables/useDashboardStats.js";
+import {historyFeedback} from "@/composables/historyFeedback.js";
+import {useDashboardStats} from "@/composables/useDashboardStats.js";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
-const { isLoading, history, error } = historyFeedback();
-const { isLoading: statsLoading, averageScore, totalPresentations, platformAverageScore, fetchDashboardStats } = useDashboardStats();
+const {isLoading, history, error} = historyFeedback();
+const {
+  isLoading: statsLoading,
+  averageScore,
+  totalPresentations,
+  platformAverageScore,
+  fetchDashboardStats
+} = useDashboardStats();
 
 onMounted(() => fetchDashboardStats());
 
@@ -111,14 +131,14 @@ const chartData = computed(() => {
       return 'Unknown';
     }
   });
-  
+
   const data = sortedHistory.map(item => {
     const score = item.overallScore || item.score || item.feedback?.overallScore || 0;
     return parseFloat(score) || 0;
   });
-  
+
   const platformAverageLineData = new Array(data.length).fill(platformAverageScore.value);
-  
+
   return {
     labels,
     datasets: [
@@ -126,7 +146,7 @@ const chartData = computed(() => {
         label: 'Presentation Score',
         data,
         borderColor: '#9333ea',
-        backgroundColor: function(context) {
+        backgroundColor: function (context) {
           const chart = context.chart;
           const {ctx, chartArea} = chart;
           if (!chartArea) {
@@ -149,7 +169,7 @@ const chartData = computed(() => {
         label: 'Platform Average',
         data: platformAverageLineData,
         borderColor: '#06b6d4',
-        backgroundColor: function(context) {
+        backgroundColor: function (context) {
           const chart = context.chart;
           const {ctx, chartArea} = chart;
           if (!chartArea) {

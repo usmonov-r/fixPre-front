@@ -3,5 +3,5 @@ import HistoryFeedback from '@/components/HistoryFeedback.vue';
 </script>
 
 <template>
-  <HistoryFeedback />
+  <HistoryFeedback/>
 </template>
