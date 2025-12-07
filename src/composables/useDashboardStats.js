@@ -16,7 +16,7 @@ export function useDashboardStats() {
                 throw new Error('No authentication token found')
             }
 
-            const response = await axios.get('https://fixpre.api.kengroq.uz/api/dashboard/stats', {
+            const response = await axios.get('http://localhost:8192/api/dashboard/stats', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
