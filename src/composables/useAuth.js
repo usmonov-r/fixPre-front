@@ -18,7 +18,7 @@ export function useAuth() {
         error.value = null;
 
         try {
-            const response = await fetch('https://fixpre.api.kengroq.uz/api/users/auth', {
+            const response = await fetch('http://localhost:8192/api/users/auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/ld+json',
@@ -54,7 +54,7 @@ export function useAuth() {
         error.value = null;
 
         try {
-            const reponse = await fetch('https://fixpre.api.kengroq.uz/api/auth/google', {
+            const reponse = await fetch('http://localhost:8192/api/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export function useAuth() {
         error.value = null;
 
         try {
-            const response = await fetch('https://fixpre.api.kengroq.uz/api/users', {
+            const response = await fetch('http://localhost:8192/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/ld+json',
@@ -130,7 +130,7 @@ export function useAuth() {
         resetSuccess.value = null;
 
         try {
-            const response = await fetch('https://fixpre.api.kengroq.uz/api/users/password/request', {
+            const response = await fetch('http://localhost:8192/api/users/password/request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/ld+json'
@@ -162,7 +162,7 @@ export function useAuth() {
         resetSuccess.value = null;
 
         try {
-            const response = await fetch('https://fixpre.api.kengroq.uz/api/users/password/reset', {
+            const response = await fetch('http://localhost:8192/api/users/password/reset', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/ld+json'},
                 body: JSON.stringify({token, newPassword})

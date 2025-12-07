@@ -14,7 +14,7 @@ export function historyFeedback() {
             return
         }
         try {
-            const response = await fetch('https://fixpre.api.kengroq.uz/api/feedback/history', {
+            const response = await fetch('http://localhost:8192/api/feedback/history', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

@@ -6,7 +6,7 @@ export const useApiStore = defineStore('api', () => {
     const error = ref(null)
     const data = ref(null)
 
-    const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://fixpre.api.kengroq.uz/api'
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8192/api'
 
     /**
      * Fetch data from API using GET request

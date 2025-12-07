@@ -7,7 +7,7 @@ export function useFeedback() {
 
     async function poolForResult(jobId, headers) {
         try {
-            const resultResponse = await fetch(`https://fixpre.api.kengroq.uz/api/results/${jobId}`, {
+            const resultResponse = await fetch(`http://localhost:8192/api/results/${jobId}`, {
                 method: 'GET',
                 headers: headers,
             });
@@ -59,7 +59,7 @@ export function useFeedback() {
         }
 
         try {
-            const uploadResponse = await fetch('https://fixpre.api.kengroq.uz/api/upload', {
+            const uploadResponse = await fetch('http://localhost:8192/api/upload', {
                 method: 'POST',
                 body: formData,
                 headers: headers
