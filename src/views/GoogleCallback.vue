@@ -9,7 +9,6 @@ const {loginWithGoogleCode, error} = useAuth();
 
 onMounted(async () => {
   const code = route.query.code;
-  console.log("code: ", code);
   if (!code) {
     router.push('/login');
     return;
